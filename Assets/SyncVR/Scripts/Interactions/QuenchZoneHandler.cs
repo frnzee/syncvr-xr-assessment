@@ -1,5 +1,4 @@
 using SyncVR.Scripts.Core;
-using SyncVR.Scripts.Guidance;
 using UnityEngine;
 
 namespace SyncVR.Scripts.Interactions
@@ -10,21 +9,30 @@ namespace SyncVR.Scripts.Interactions
 
         [SerializeField] private BlacksmithWorkflowSystem _workflowSystem;
         [SerializeField] private ParticleSystem _steamParticles;
-        [SerializeField] private WaypointArrowHandler _waypointArrow;
 
         private bool _hasCompleted;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_hasCompleted) return;
+            if (_hasCompleted)
+            {
+                return;
+            }
 
             var ingot = other.GetComponentInParent<IngotStateHandler>();
-            if (!ingot) return;
-            if (ingot.CurrentState != IngotState.Shaped) return;
+
+            if (!ingot)
+            {
+                return;
+            }
+
+            if (ingot.CurrentState != IngotState.Shaped)
+            {
+                return;
+            }
 
             ingot.SetState(IngotState.Quenched);
             _steamParticles?.Play();
-            _waypointArrow?.Deactivate();
 
             if (_workflowSystem.TryCompleteStep(QuenchStepIndex))
                 _hasCompleted = true;

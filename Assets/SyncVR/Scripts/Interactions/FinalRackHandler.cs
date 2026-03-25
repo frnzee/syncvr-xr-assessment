@@ -27,13 +27,17 @@ namespace SyncVR.Scripts.Interactions
             var ingot = (args.interactableObject as MonoBehaviour)
                 ?.GetComponentInParent<IngotStateHandler>();
 
-            if (!ingot) return;
-            if (ingot.CurrentState != IngotState.Sharpened) return;
+            if (!ingot)
+            {
+                return;
+            }
+
+            if (ingot.CurrentState != IngotState.Sharpened)
+            {
+                return;
+            }
 
             ingot.SetState(IngotState.Finished);
-
-            if (_workflowSystem.TryCompleteStep(RackStepIndex))
-                Debug.Log(_workflowSystem.GenerateJsonLog());
         }
     }
 }

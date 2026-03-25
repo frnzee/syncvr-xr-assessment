@@ -16,9 +16,13 @@ namespace SyncVR.Scripts.Interactions
 
         public override bool CanHover(UnityEngine.XR.Interaction.Toolkit.Interactables.IXRHoverInteractable interactable)
         {
-            if (!base.CanHover(interactable)) return false;
+            if (!base.CanHover(interactable))
+            {
+                return false;
+            }
 
             var stateHandler = GetIngotStateHandler(interactable);
+            
             if (!stateHandler) return true;
 
             if (stateHandler.CurrentState != IngotState.Heated)
@@ -32,17 +36,27 @@ namespace SyncVR.Scripts.Interactions
 
         public override bool CanSelect(UnityEngine.XR.Interaction.Toolkit.Interactables.IXRSelectInteractable interactable)
         {
-            if (!base.CanSelect(interactable)) return false;
+            if (!base.CanSelect(interactable))
+            {
+                return false;
+            }
 
             var stateHandler = GetIngotStateHandler(interactable);
-            if (!stateHandler) return true;
+            
+            if (!stateHandler)
+            {
+                return true;
+            }
 
             return stateHandler.CurrentState == IngotState.Heated;
         }
 
         private void TryShowHint()
         {
-            if (Time.time - _lastHintTime < HintCooldown) return;
+            if (Time.time - _lastHintTime < HintCooldown)
+            {
+                return;
+            }
 
             _lastHintTime = Time.time;
             _diegeticHint?.ShowHint(ColdIngotHintMessage);

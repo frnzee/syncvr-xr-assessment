@@ -26,10 +26,15 @@ namespace SyncVR.Scripts.Interactions
 
         private void OnGrabbed(SelectEnterEventArgs args)
         {
-            if (_hasCompleted) return;
+            if (_hasCompleted)
+            {
+                return;
+            }
 
             if (_workflowSystem.TryCompleteStep(GrabStepIndex))
+            {
                 _hasCompleted = true;
+            }
         }
     }
 }

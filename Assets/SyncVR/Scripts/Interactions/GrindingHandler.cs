@@ -58,12 +58,19 @@ namespace SyncVR.Scripts.Interactions
 
         private void TrySendHaptics()
         {
-            if (Time.time - _lastHapticTime < HapticInterval) return;
+            if (Time.time - _lastHapticTime < HapticInterval)
+            {
+                return;
+            }
 
             _lastHapticTime = Time.time;
 
             var interactable = _currentBlade?.GetComponent<XRGrabInteractable>();
-            if (!interactable) return;
+
+            if (!interactable)
+            {
+                return;
+            }
 
             foreach (var interactor in interactable.interactorsSelecting)
             {

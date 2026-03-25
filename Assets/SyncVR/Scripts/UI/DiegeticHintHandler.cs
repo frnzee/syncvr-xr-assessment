@@ -25,17 +25,6 @@ namespace SyncVR.Scripts.UI
 
         private Coroutine _hideCoroutine;
 
-        private void Awake()
-        {
-            _workflowSystem.OnWrongStepAttempted += OnWrongStepAttempted;
-            _hintRoot.SetActive(false);
-        }
-
-        private void OnDestroy()
-        {
-            _workflowSystem.OnWrongStepAttempted -= OnWrongStepAttempted;
-        }
-
         public void ShowHint(string message)
         {
             _hintText.text = message;
@@ -45,6 +34,17 @@ namespace SyncVR.Scripts.UI
                 StopCoroutine(_hideCoroutine);
 
             _hideCoroutine = StartCoroutine(HideAfterDelay());
+        }
+
+        private void Awake()
+        {
+            _workflowSystem.OnWrongStepAttempted += OnWrongStepAttempted;
+            _hintRoot.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            _workflowSystem.OnWrongStepAttempted -= OnWrongStepAttempted;
         }
 
         private void OnWrongStepAttempted(int currentStep)

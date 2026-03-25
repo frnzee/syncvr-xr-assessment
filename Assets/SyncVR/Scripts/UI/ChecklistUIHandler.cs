@@ -6,8 +6,8 @@ namespace SyncVR.Scripts.UI
 {
     public class ChecklistUIHandler : MonoBehaviour
     {
-        private const string CompletedPrefix = "✓ ";
-        private const string PendingPrefix = "○ ";
+        private const string CompletedPrefix = "✓";
+        private const string PendingPrefix = "○";
 
         private static readonly string[] StepLabels =
         {

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace SyncVR.Scripts.Core
@@ -12,31 +11,23 @@ namespace SyncVR.Scripts.Core
         [SerializeField] private GameObject _ingotVisual;
         [SerializeField] private GameObject _bladeVisual;
 
-        private IngotState _currentState = IngotState.Cold;
-
-        public IngotState CurrentState => _currentState;
-
-        public event Action<IngotState> OnStateChanged;
-
+        public IngotState CurrentState { get; private set; } = IngotState.Cold;
+        
         public void SetState(IngotState newState)
         {
-            _currentState = newState;
+            CurrentState = newState;
             ApplyVisuals();
-            OnStateChanged?.Invoke(newState);
         }
 
         private void ApplyVisuals()
         {
-            var isShaped = _currentState == IngotState.Shaped
-                        || _currentState == IngotState.Quenched
-                        || _currentState == IngotState.Sharpened
-                        || _currentState == IngotState.Finished;
+            var isShaped = CurrentState is IngotState.Shaped or IngotState.Quenched or IngotState.Sharpened or IngotState.Finished;
 
             _ingotVisual.SetActive(!isShaped);
             _bladeVisual.SetActive(isShaped);
 
             var activeRenderer = isShaped ? _bladeRenderer : _ingotRenderer;
-            var isHot = _currentState == IngotState.Heated || _currentState == IngotState.Shaped;
+            var isHot = CurrentState is IngotState.Heated or IngotState.Shaped;
             activeRenderer.material = isHot ? _heatedMaterial : _coldMaterial;
         }
     }

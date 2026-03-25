@@ -13,16 +13,29 @@ namespace SyncVR.Scripts.Interactions
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_hasCompleted) return;
+            if (_hasCompleted)
+            {
+                return;
+            }
 
             var ingot = other.GetComponentInParent<IngotStateHandler>();
-            if (!ingot) return;
-            if (ingot.CurrentState != IngotState.Cold) return;
+
+            if (!ingot)
+            {
+                return;
+            }
+
+            if (ingot.CurrentState != IngotState.Cold)
+            {
+                return;
+            }
 
             ingot.SetState(IngotState.Heated);
 
             if (_workflowSystem.TryCompleteStep(ForgeStepIndex))
+            {
                 _hasCompleted = true;
+            }
         }
     }
 }
